@@ -1,0 +1,124 @@
+1.12.8 - Fix grid hub and node jvm arguments. Fixes #281.
+1.12.7 - Add back guava and commons lang3 dependency.
+1.12.6 - Fix IE (add dependency back).
+1.12.5 - Able to set grid extras port - Fixes issue #204.
+       - Refactor pom.xml to make artifact size smaller.
+       - Use selenium version 2.53.1 instead of 2.46.0.
+       - Fixes to selenium 3.0 config issues (appium and desktop).
+       - Allow spaces in path of selenium-grid-extras jar - Fixes issue #263.
+       - Fix version comparability checker for selenium 3.0. 
+1.12.4 - Support Selenium 3.0-beta4. - Fixed with PR257
+       - Default to 64bit chromedriver on MAC - Fixed with PR257
+1.12.3 - Add marionette suport. Ability to auto upgrade marionette as well. Need Selenium 3.0 beta for this to work.
+       - Add resolution endpoint. Ability to get resolution on Windows and OSX. Ability to set resolution on Windows Server.
+       - Fix test to work on Windows - testChromeDriverDString
+       - Add ability to add additional jars to the node classpath (#228) - Fixed with PR234
+       - Fix issue #156 - Fixed with PR233
+       - Ask for Node port in FirstTimeRunConfig - Fixed with PR236
+1.12.2 - Add phantomjs support
+       - Add WIN10 to platform list
+       - Take into account idle timeout for video recording
+       - Fix issue #93
+       - Fix issue #214
+       - Fix FirstTimeRunConfig for windows. Only call getWindowsRealArchitecture() if Windows
+1.11.8 - Adding ability to set automatic user logon for Windows both on and off Active Directory
+       - Start multiple hubs on a machine (PR #177)
+       - Start nodes with minimized console window
+       - Allow turning on/off the SessionHistory feature. (PR #167)
+       - Delete old videos in hub before downloading a new video (PR #162)
+       - Fix issue #159, where you can't pass in "-Xmx" or any option not starting with -D
+1.11.7 - Do not output requested capabilities into session_history, since it will output whole Firefox profile from time to time leading to a 2GB log file per node
+1.11.6 - Adding Support for Microsoft Edge Driver
+       - Removing the option to auto upgrade grid extras
+1.10.1 - [BUG] Cache responses from GitHub for 24 hours, to prevent a situation where GitHub rate limits the update checks
+       - Merge pull request #141 from smccarthy/fix_kill_pid
+       - Merge pull request #143 from smccarthy/fix_reboot
+1.10.0 - WhenKilling IE, kill any crash reports that might be open
+       - Clean up any empty WebDriver directories in Windows Temp directory at shutdown
+       - Logs are now deleted based on time stamp and size
+       - [BUG] fix the actual deleting of old logs of certain size
+1.9.1 - Fix how the start script is being written on post update
+1.9.0 - Add self updating feature to Selenium Grid Extras
+1.8.0 - Improve IE post build clean up, to clear all history and cache
+      - Clear up logs once they reach a certain size
+      - issue #140: Changed the WebDriverReleaseManager urls to https
+      - pull #106: fixed the StopGrid command for Windows
+1.7.1 - [BUG] Fixing a situation where sometimes the nodes are idle but hub cannot connect to them
+1.7.0 - Hub will attempt to download the video from each node and collect them in 1 place, so user can view the test run from the http://hub:3000
+      - Set default videos to keep to be 30 instead of 10
+      - Adding ability to watch videos from home page of grid extras
+      - Improving Video recording functionality and adding more logs
+      - Adding an error message if use tries to start video recording on a headless OS
+      - Display grid extras version on Homepage. Pull request #62
+      - [BUG] Exit with better message if node config or hub config is not present. Issue #60 and #61
+      - [BUG] fixing the bug, where session history was never recorded.
+      - [BUG] More cleaner message on servlete if the screenshot cannot be taken. Issue #61
+1.6.1 - [BUG] Significantly improved logic for restarting grid nodes, to prevent orphan session in the new session queue and chances of a bad TestSlot that cannot be cleaned up.
+1.6.0 - Better session tracking, on the /session_history endpoint
+      - [BUG] fixing inability to start the grid hub because the webdriver 2.44 has broken JSON dependency
+      - Adding a machine view at http://localhost:3000
+      - Deprecating the status servlet, it will be replaced with better API soon
+      - Adding IE mixed mode toggle
+      - Grid Hub now launches from JSON file (hub_4444.json)
+      - Improved OS detection on Windows for first run, this solves issue between Windows/Vista/XP/Win8
+      - [BUG] Set timeout to 5 seconds when pulling node config from the central hub, instead of sitting there indefinetely
+      - [BUG] Fix /ps endpoint
+      - [BUG] Fix bug #52, kill all firefox
+1.5.2 - Make the Grid Extras compatible with Java 1.6
+1.5.1 - [BUG] Firefox on windows was not getting terminated with /kill_firefox command
+1.5.0 - Automatically record video of a running test
+      - Daily rolling logs for grid extras
+      - Adding /kill_safari end point to kill instance of Safari Browser
+      - Fixing the /kill_firefox endpoint, it was broken for some reason
+1.4.0 - Modifying system timeouts, such as browser idle timeout, new session timeout, and grid status checking timeouts
+      - When launching grid, use absolute path to java not just "java" alias which might not be declared in the PATH if you are using a Daemon (Non Windows OS only)
+1.3.3 - Fixed an issue where the node will attempt to reboot and will be stuck in an endless loop trying to kill safari and never rebooting. Fixing the issue by commenting out the kill browsers command and just sending a reboot command
+1.3.2 - Fixing a bug where node config JSON have all Integers converted to Doubles by Gson, which prevents nodes from starting
+1.3.1 - When sending config to HUB and reciving it from HUB, parse the config and pretty print it into the file
+      - Performance improvment in the tests, don't try to ping hub asking for local box's info when in test mode
+1.3.0 - Nodes store all of the configs on the HUB and update from the HUB everytime they are started
+      - Switching to Semantic Versioning
+      - Adding ability to reboot grid node after a certain session limit has been reached.
+      - Removed log4j from the proxy, it seems to bottleneck requests
+      - Update the new session timeout setting to be 2 minutes instead of infinite
+1.2.4 - Added ability to self update all of the drivers if a new version was released
+      - Adding Safari as a capability
+      - Add the host ip back into the mix, by adding it as a CLI flag that is generated on the fly
+      - Write example of config file to file system to see what can be overwritten
+      - Update URL for new WD locations
+      - Add ability to pass JVM args into the node starters and grid extras
+      - Bump up the registration cycle so the nodes are not spamming the HUB
+1.2.3 - Take out "host" out of node config. The boot time for each node will be slightly longer
+        However, it will be much simpler to copy paste same config file on many nodes and not
+        have to edit each node 1 by 1
+1.2.2 - All of the System.out statments now write to log/log.out
+      - Install self as a crontab service on Windows/Mac/Linux boxes
+      - Crontab service checks if all the nodes are up and running, if any down starts them up
+      - Remove Webdriver Jar from packed dependencies, reducing artifact size from 32MB to 4MB
+        (Webdriver Jar gets downloaded by this jar automatically, and when started uses this jar
+         in the classpath to get access to servlettes etc...)
+1.2.1 - Output node and hub logs into the shared directory for easy review
+      - Tweak node registration cycle to work better when node dies
+      - Fix the /stop_grid end point for windows and linux
+1.2.0 - Refactor config, local config only overwrite the explicit values in default config
+      - Add support for chrome
+      - Start each browser node as a an individual process
+      - Grid nodes now use the JSON config which comes with WebDriver
+      - Adding a JSON servlette to show status of the grid
+1.1.9 - Auto download IEDriver.exe
+      - Allow user to change Protected mode for IE via end-point
+1.1.8 - Nodes started from withing Grid now auto kill IE and move mouse
+1.1.7 - Killing IE and Chrome now also kills respective driver.exe
+1.1.6 - Fix the bug with path to SE Extras not being properly printed in -cp
+1.1.5 - Windows now starts node/hub jars properly
+1.1.4 - Fixing some bugs at how services are started on windows. Using full paths instead of relative.
+1.1.3 - Implement Start Grid Hub/Node commands on windows
+1.1.2 - Updates to make GUI in browser look nicer
+1.1.1 - First time run asks questions about config
+1.1.0 - Adding ability to kill by pid
+      - Adding Netstat call to list busy ports
+      - Ability to start/stop Selenium grid hub and nodes
+1.0.3 - Fix bug with /api end point not returning any values
+1.0.2 - Add default config writing, so you can start with a naked jar and it will set itself up
+1.0.1 - Roll up all the Lib dependencies into single jar, so now just download jar file and no need to do full git clone
+1.0.0 - Initial release
